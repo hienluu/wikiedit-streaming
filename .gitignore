@@ -1,0 +1,8 @@
+.classpath
+.project
+.settings/
+target/
+project/target/
+project/project/
+spark-warehouse/
+bin/

@@ -1,9 +1,9 @@
-package org.apache.spark.spark.streaming.wikiedit.example
+package org.wikiedit.examples
 
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.SparkConf
 import org.apache.spark.rdd.RDD
-import org.apache.spark.spark.streaming.wikiedit.{WikiEditStreamReceiver, WikipediaEditEvent}
+import org.wikiedit.receiver.{WikiEditStreamReceiver, WikipediaEditEvent}
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 

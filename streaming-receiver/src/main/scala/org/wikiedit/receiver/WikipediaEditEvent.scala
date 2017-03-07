@@ -1,4 +1,4 @@
-package org.apache.spark.spark.streaming.wikiedit
+package org.wikiedit.receiver
 
 import java.util.regex.Pattern
 import java.util.regex.Matcher

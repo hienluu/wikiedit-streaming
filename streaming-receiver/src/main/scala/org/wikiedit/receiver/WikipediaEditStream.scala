@@ -1,12 +1,16 @@
-package org.apache.spark.spark.streaming.wikiedit
+package org.wikiedit.receiver
 
 import java.util.concurrent.{ArrayBlockingQueue, BlockingQueue}
 
 import org.apache.spark.internal.Logging
-import org.schwering.irc.lib.IRCConnection;
+import org.schwering.irc.lib.IRCConnection
+import org.slf4j.{Logger, LoggerFactory};
 
 
-class WikipediaEditStream(host:String, port:Int) extends Logging {
+class WikipediaEditStream(host:String, port:Int)  {
+
+  val logger:Logger = LoggerFactory.getLogger(this.getClass)
+
   val editQueue: BlockingQueue[WikipediaEditEvent]  = new ArrayBlockingQueue(128);
 
   val nick:String  = "spark-bot-" + (Math.random() * 1000).toInt
@@ -20,12 +24,14 @@ class WikipediaEditStream(host:String, port:Int) extends Logging {
   conn.setName("WikipediaEditEventIrcStreamThread");
 
   def start()  {
+    logger.info("starting the stream..")
     if (!conn.isConnected()) {
       conn.connect();
     }
   }
 
   def stop() {
+    logger.info("stopping the stream..")
     if (conn.isConnected()) {
     }
 
@@ -34,10 +40,12 @@ class WikipediaEditStream(host:String, port:Int) extends Logging {
   }
 
   def join(channel:String) {
+    logger.info(s"joining channel $channel..")
     conn.send("JOIN " + channel);
   }
 
   def leave(channel:String) {
+    logger.info(s"leaving channel $channel..")
     conn.send("PART " + channel);
   }
 

@@ -1,4 +1,4 @@
-package org.apache.spark.spark.streaming.wikiedit
+package org.wikiedit.receiver
 
 import java.util.concurrent.BlockingQueue
 

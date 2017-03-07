@@ -1,20 +1,24 @@
-package org.apache.spark.spark.streaming.wikiedit
+package org.wikiedit.receiver
 
 import java.util.concurrent.{BlockingQueue, TimeUnit}
 
-import org.apache.spark.internal.Logging
+import org.slf4j.{Logger, LoggerFactory}
+
+
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.receiver.Receiver
 
 class WikiEditStreamReceiver(host:String = "irc.wikimedia.org", port:Int = 6667,
                              channel:String = "#en.wikipedia")
-  extends Receiver[WikipediaEditEvent](StorageLevel.MEMORY_AND_DISK_2)  with Logging {
+  extends Receiver[WikipediaEditEvent](StorageLevel.MEMORY_AND_DISK_2)  {
+
+  val logger:Logger = LoggerFactory.getLogger(this.getClass)
 
   lazy val ircStream:WikipediaEditStream = new WikipediaEditStream(host, port) with Serializable
 
   def onStart() {
 
-    logInfo("Starting " + this.getClass.getName)
+    logger.info("Starting " + this.getClass.getName)
     ///Start the thread that receives data over a connection
     new Thread("Socket Receiver") {
       override def run() {
@@ -36,7 +40,7 @@ class WikiEditStreamReceiver(host:String = "irc.wikimedia.org", port:Int = 6667,
     ircStream.start();
     ircStream.join(channel);
 
-    logInfo(s"joining channel $channel")
+    logger.info(s"joining channel $channel")
 
     while(!isStopped) {
       // Query for the next edit event
@@ -49,7 +53,7 @@ class WikiEditStreamReceiver(host:String = "irc.wikimedia.org", port:Int = 6667,
           store(wikiEdit)
         }
       } else {
-        logWarning("**** edit queue is null ******");
+        logger.warn("**** edit queue is null ******");
       }
     }
   }

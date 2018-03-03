@@ -7,11 +7,11 @@ import org.schwering.irc.lib.IRCConnection
 import org.slf4j.{Logger, LoggerFactory};
 
 
-class WikipediaEditStream(host:String, port:Int)  {
+class WikipediaEditStream(host:String, port:Int, queueSize:Int = 128)  {
 
   val logger:Logger = LoggerFactory.getLogger(this.getClass)
 
-  val editQueue: BlockingQueue[WikipediaEditEvent]  = new ArrayBlockingQueue(128);
+  val editQueue: BlockingQueue[WikipediaEditEvent]  = new ArrayBlockingQueue(queueSize);
 
   val nick:String  = "spark-bot-" + (Math.random() * 1000).toInt
   val conn:IRCConnection = new IRCConnection(host, Array(port) , "", nick, nick, nick);

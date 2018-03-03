@@ -6,7 +6,7 @@ name := "wikiedit-streaming"
 lazy val commonSettings = Seq(
   version := "0.0.1",
   organization := "org.wikiedit-streaming",
-  scalaVersion := "2.11.8",
+  scalaVersion := "2.11.8"
 )
 
 assemblyOption in assembly := (assemblyOption in assembly).value.copy(includeScala = false)

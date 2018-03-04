@@ -3,11 +3,13 @@ package org.wikiedit.examples
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.SparkConf
 import org.apache.spark.rdd.RDD
-import org.wikiedit.receiver.{WikiEditStreamReceiver, WikipediaEditEvent}
+
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 
-object WikepediaEditStreamExample {
+import org.wikiedit.receiver.{WikiEditStreamReceiver, WikipediaEditEvent}
+
+object WikiEditStreamExample {
   def main(args: Array[String]) {
 
     setStreamingLogLevels

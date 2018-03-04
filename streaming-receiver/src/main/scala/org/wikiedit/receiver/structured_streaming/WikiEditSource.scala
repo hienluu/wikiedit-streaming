@@ -18,7 +18,7 @@ import scala.collection.mutable.ListBuffer
 /**
   * A source that generates stream of real-time wiki edits.
   */
-class WikeEditSourceProvider extends StreamSourceProvider with DataSourceRegister {
+class WikiEditSourceProvider extends StreamSourceProvider with DataSourceRegister {
 
   override def shortName(): String = "wikiedit"
 
@@ -86,8 +86,6 @@ class WikiEditStreamSource(
                           port: Int,
                           channel: String,
                           queueSize: Int) extends Source with Logging {
-
-  import WikiEditStreamSource._
 
   override def schema: StructType = WikiEditSourceProvider.SCHEMA
 
@@ -208,15 +206,4 @@ class WikiEditStreamSource(
   }
 
   override def toString: String = s"WikiEditStreamSource[host: $host, port: $port, channel: $channel]"
-}
-
-object WikiEditStreamSource {
-  def createAndStartStream(host: String,
-                           port: Int,
-                           channel: String,
-                           queueSize: Int) : WikipediaEditStream = {
-
-    val ircStream:WikipediaEditStream = new WikipediaEditStream(host, port, queueSize) with Serializable
-    ircStream
-  }
 }

@@ -5,5 +5,12 @@ Build steps:
 * sbt package
 * sbt assembly : to generate deployable jars
 
+Apache Spark Datasource V2
+* Understand the MicroBatchReader interface
+* Good pull request to go over
+* Good built-in (V1 and V2) sources to study
+  * V1 - MemoryStream, RateSourceProviderV2
+  * V1 - TextSocketSource
 
-https://github.com/pbassiner/sbt-multi-project-example
+Reference:
+* https://github.com/pbassiner/sbt-multi-project-example

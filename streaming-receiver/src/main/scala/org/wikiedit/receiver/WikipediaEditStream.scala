@@ -53,3 +53,9 @@ class WikipediaEditStream(host:String, port:Int, queueSize:Int = 128)  {
     return editQueue;
   }
 }
+
+object WikipediaEditStream {
+  def apply(host:String, port:Int, queueSize:Int = 128) = {
+    new WikipediaEditStream(host, port, queueSize)
+  }
+}

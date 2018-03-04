@@ -10,7 +10,7 @@ assemblyOption in assembly := (assemblyOption in assembly).value.copy(includeSca
 
 lazy val receiver = project.in(file("streaming-receiver")).
                         settings(commonSettings,
-                          libraryDependencies ++= commonDependencies)
+                          libraryDependencies ++= commonProvidedDependencies)
 
 lazy val examples = project.in(file("examples")).
                           dependsOn(receiver).
@@ -19,9 +19,16 @@ lazy val examples = project.in(file("examples")).
                           )
 
 
+lazy val commonProvidedDependencies = Seq(
+  "org.apache.spark" %% "spark-core" % "2.3.0" % "provided",
+  "org.apache.spark" %% "spark-streaming" % "2.3.0" % "provided",
+  "org.apache.spark" %% "spark-sql" % "2.3.0" % "provided",
+  "org.apache.spark" %% "spark-catalyst" % "2.3.0" % "provided"
+)
+
 lazy val commonDependencies = Seq(
-  "org.apache.spark" %% "spark-core" % "2.2.1" % "provided",
-  "org.apache.spark" %% "spark-streaming" % "2.2.1" % "provided",
-  "org.apache.spark" %% "spark-sql" % "2.2.1" % "provided",
-  "org.apache.spark" %% "spark-catalyst" % "2.2.1" % "provided"
+  "org.apache.spark" %% "spark-core" % "2.3.0",
+  "org.apache.spark" %% "spark-streaming" % "2.3.0",
+  "org.apache.spark" %% "spark-sql" % "2.3.0",
+  "org.apache.spark" %% "spark-catalyst" % "2.3.0"
 )

@@ -5,7 +5,7 @@ import java.util.concurrent.{BlockingQueue, TimeUnit}
 import java.sql.Timestamp
 
 import org.apache.spark.internal.Logging
-import org.apache.spark.sql.{AnalysisException, DataFrame, Row, SQLContext}
+import org.apache.spark.sql.{DataFrame, Row, SQLContext}
 import org.apache.spark.sql.catalyst.util.CaseInsensitiveMap
 import org.apache.spark.sql.execution.streaming.{LongOffset, Offset, Source}
 import org.apache.spark.sql.sources.{DataSourceRegister, StreamSourceProvider}
@@ -16,7 +16,9 @@ import scala.collection.mutable.ListBuffer
 
 
 /**
-  * A source that generates stream of real-time wiki edits.
+  * A source that generates stream of real-time wiki edits by connecting to wikipedia IRC server.
+  *
+  * May need to switch their new web service https://wikitech.wikimedia.org/wiki/EventStreams
   */
 class WikiEditSourceProvider extends StreamSourceProvider with DataSourceRegister {
 
@@ -99,7 +101,7 @@ class WikiEditStreamSource(
   val editList:ListBuffer[WikipediaEditEvent] = new ListBuffer[WikipediaEditEvent]()
 
 
-  var ircStream:WikipediaEditStream = new WikipediaEditStream(host, port, queueSize) with Serializable
+  var ircStream:WikipediaEditStream = WikipediaEditStream(host, port, queueSize)
 
   // kick off the thread to start receiving the events
   initialize()
@@ -178,7 +180,7 @@ class WikiEditStreamSource(
     log.debug(s"** commit($end)")
 
     val newOffset = LongOffset.convert(end).getOrElse(
-      sys.error(s"TextSocketStream.commit() received an offset ($end) that did not " +
+      sys.error(s"WikiEditStreamSource.commit() received an offset ($end) that did not " +
         s"originate with an instance of this class")
     )
 

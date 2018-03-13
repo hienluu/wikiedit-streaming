@@ -20,7 +20,6 @@ object WikiEditSourceV2Example {
     val providerClassName = SOURCE_PROVIDER_CLASS.substring(0, SOURCE_PROVIDER_CLASS.indexOf("$"))
     println(providerClassName)
 
-
     val spark = SparkSession
       .builder
       .appName("WikiEditSourceV2Example")

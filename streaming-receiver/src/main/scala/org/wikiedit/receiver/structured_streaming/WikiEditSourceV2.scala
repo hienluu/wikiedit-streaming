@@ -71,7 +71,7 @@ class WikiEditStreamMicroBatchReader(options: DataSourceOptions) extends MicroBa
     logInputs()
     ircStream = WikipediaEditStream(host, port, queueSize)
 
-    worker = new Thread("Socket Receiver") {
+    worker = new Thread("WikiEdit Worker") {
       setDaemon(true)
       override def run() {
         receive()
